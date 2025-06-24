@@ -303,6 +303,10 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding-left: var(--space-3xl);
+    padding-right: var(--space-3xl);
 }
 
 .nav-logo {
