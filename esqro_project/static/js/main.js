@@ -1,157 +1,170 @@
+/**
+* Template Name: Scout
+* Template URL: https://bootstrapmade.com/scout-bootstrap-multipurpose-template/
+* Updated: May 05 2025 with Bootstrap v5.3.5
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
 
-// Mobile Navigation Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+(function() {
+    "use strict";
+  
+    /**
+     * Apply .scrolled class to the body as the page is scrolled down
+     */
+    function toggleScrolled() {
+      const selectBody = document.querySelector('body');
+      const selectHeader = document.querySelector('#header');
+      if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
+      window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
     }
-    
-    // Smooth scrolling for navigation links
-    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-            
-            // Close mobile menu if open
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
+  
+    document.addEventListener('scroll', toggleScrolled);
+    window.addEventListener('load', toggleScrolled);
+  
+    /**
+     * Mobile nav toggle
+     */
+    const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+  
+    function mobileNavToogle() {
+      document.querySelector('body').classList.toggle('mobile-nav-active');
+      mobileNavToggleBtn.classList.toggle('bi-list');
+      mobileNavToggleBtn.classList.toggle('bi-x');
+    }
+    if (mobileNavToggleBtn) {
+      mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+    }
+  
+    /**
+     * Hide mobile nav on same-page/hash links
+     */
+    document.querySelectorAll('#navmenu a').forEach(navmenu => {
+      navmenu.addEventListener('click', () => {
+        if (document.querySelector('.mobile-nav-active')) {
+          mobileNavToogle();
+        }
+      });
+  
     });
-    
-    // Add scroll effect to navbar
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+  
+    /**
+     * Toggle mobile nav dropdowns
+     */
+    document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
+      navmenu.addEventListener('click', function(e) {
+        e.preventDefault();
+        this.parentNode.classList.toggle('active');
+        this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
+        e.stopImmediatePropagation();
+      });
+    });
+  
+    /**
+     * Scroll top button
+     */
+    let scrollTop = document.querySelector('.scroll-top');
+  
+    function toggleScrollTop() {
+      if (scrollTop) {
+        window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
+      }
+    }
+    scrollTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  
+    window.addEventListener('load', toggleScrollTop);
+    document.addEventListener('scroll', toggleScrollTop);
+  
+    /**
+     * Animation on scroll function and init
+     */
+    function aosInit() {
+      AOS.init({
+        duration: 600,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+      });
+    }
+    window.addEventListener('load', aosInit);
+  
+    /**
+     * Initiate Pure Counter
+     */
+    new PureCounter();
+  
+    /**
+     * Frequently Asked Questions Toggle
+     */
+    document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle').forEach((faqItem) => {
+      faqItem.addEventListener('click', () => {
+        faqItem.parentNode.classList.toggle('faq-active');
+      });
+    });
+  
+    /**
+     * Init swiper sliders
+     */
+    function initSwiper() {
+      document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+        let config = JSON.parse(
+          swiperElement.querySelector(".swiper-config").innerHTML.trim()
+        );
+  
+        if (swiperElement.classList.contains("swiper-tab")) {
+          initSwiperWithCustomPagination(swiperElement, config);
         } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            navbar.style.boxShadow = 'none';
+          new Swiper(swiperElement, config);
         }
-    });
-    
-    // Simple form handling for CTAs (you can replace with actual form submission)
-    const ctaButtons = document.querySelectorAll('.btn-primary');
-    ctaButtons.forEach(button => {
-        if (button.textContent.includes('Start Free Trial') || button.textContent.includes('Start Your Free Trial')) {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Replace this with your actual form handling or redirect
-                alert('Free trial signup coming soon! Please contact us for early access.');
+      });
+    }
+  
+    window.addEventListener("load", initSwiper);
+  
+    /**
+     * Correct scrolling position upon page load for URLs containing hash links.
+     */
+    window.addEventListener('load', function(e) {
+      if (window.location.hash) {
+        if (document.querySelector(window.location.hash)) {
+          setTimeout(() => {
+            let section = document.querySelector(window.location.hash);
+            let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
+            window.scrollTo({
+              top: section.offsetTop - parseInt(scrollMarginTop),
+              behavior: 'smooth'
             });
+          }, 100);
         }
+      }
     });
-    
-    // Demo button handler
-    const demoButton = document.querySelector('.btn-secondary');
-    if (demoButton && demoButton.textContent.includes('Watch Demo')) {
-        demoButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Replace this with your actual demo video or modal
-            alert('Demo video coming soon! Contact us to schedule a live demo.');
-        });
-    }
-    
-    // Contact sales button
-    const contactButtons = document.querySelectorAll('button');
-    contactButtons.forEach(button => {
-        if (button.textContent.includes('Contact Sales')) {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Replace with actual contact form or mailto
-                window.location.href = 'mailto:sales@esqro.com?subject=Enterprise Plan Inquiry';
-            });
+  
+    /**
+     * Navmenu Scrollspy
+     */
+    let navmenulinks = document.querySelectorAll('.navmenu a');
+  
+    function navmenuScrollspy() {
+      navmenulinks.forEach(navmenulink => {
+        if (!navmenulink.hash) return;
+        let section = document.querySelector(navmenulink.hash);
+        if (!section) return;
+        let position = window.scrollY + 200;
+        if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+          document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
+          navmenulink.classList.add('active');
+        } else {
+          navmenulink.classList.remove('active');
         }
-    });
-    
-    // Animate elements on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Observe feature cards and pricing cards
-    const animatedElements = document.querySelectorAll('.feature-card, .pricing-card');
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-});
-
-// Add some interactive hover effects
-document.addEventListener('DOMContentLoaded', function() {
-    // Add tilt effect to dashboard mockup
-    const dashboardMockup = document.querySelector('.dashboard-mockup');
-    if (dashboardMockup) {
-        dashboardMockup.addEventListener('mouseenter', function() {
-            this.style.transform = 'perspective(1000px) rotateY(-2deg) scale(1.02)';
-        });
-        
-        dashboardMockup.addEventListener('mouseleave', function() {
-            this.style.transform = 'perspective(1000px) rotateY(-5deg) scale(1)';
-        });
+      })
     }
-    
-    // Add counter animation to stats
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const statsObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target;
-                const finalValue = target.textContent;
-                animateCounter(target, finalValue);
-                statsObserver.unobserve(target);
-            }
-        });
-    });
-    
-    statNumbers.forEach(stat => {
-        statsObserver.observe(stat);
-    });
-    
-    function animateCounter(element, finalValue) {
-        const isNumber = finalValue.match(/\d+/);
-        if (!isNumber) return;
-        
-        const numericValue = parseInt(isNumber[0]);
-        const suffix = finalValue.replace(numericValue.toString(), '');
-        let currentValue = 0;
-        const increment = numericValue / 50;
-        
-        const timer = setInterval(() => {
-            currentValue += increment;
-            if (currentValue >= numericValue) {
-                element.textContent = finalValue;
-                clearInterval(timer);
-            } else {
-                element.textContent = Math.floor(currentValue) + suffix;
-            }
-        }, 30);
-    }
-});
+    window.addEventListener('load', navmenuScrollspy);
+    document.addEventListener('scroll', navmenuScrollspy);
+  
+  })();
