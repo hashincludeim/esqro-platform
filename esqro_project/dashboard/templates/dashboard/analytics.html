@@ -1,0 +1,80 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Analytics</h1>
+    <p class="page-subtitle">Financial insights and performance metrics for your projects</p>
+</div>
+
+<div class="analytics-grid">
+    <div class="analytics-card">
+        <div class="analytics-header">
+            <h3 class="analytics-title">Revenue Trend</h3>
+            <span class="analytics-period">Last 12 Months</span>
+        </div>
+        <div class="chart-container">
+            <div class="chart-placeholder">Revenue chart will be displayed here</div>
+        </div>
+    </div>
+    
+    <div class="analytics-card">
+        <div class="analytics-header">
+            <h3 class="analytics-title">Project Distribution</h3>
+            <span class="analytics-period">Current</span>
+        </div>
+        <div class="chart-container">
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column;">
+                <div style="width: 140px; height: 140px; border-radius: 50%; position: relative; background: conic-gradient(#3498db 0deg 180deg, #27ae60 180deg 270deg, #f39c12 270deg 360deg); margin-bottom: 1rem;">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--gray-800);">12</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-600);">Projects</div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #3498db;"></div>
+                        <span>Construction (50%)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #27ae60;"></div>
+                        <span>Infrastructure (25%)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #f39c12;"></div>
+                        <span>Commercial (25%)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="analytics-card" style="grid-column: 1 / -1;">
+        <div class="analytics-header">
+            <h3 class="analytics-title">Payment Performance Metrics</h3>
+            <span class="analytics-period">This Quarter</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding: 1rem;">
+            <div style="text-align: center; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                <div style="font-size: 2rem; font-weight: bold; color: var(--success); margin-bottom: 0.5rem;">95%</div>
+                <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">On-Time Payments</div>
+                <div style="font-size: 0.8rem; color: var(--gray-500);">↗️ +5% from last quarter</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">7.2</div>
+                <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">Avg Days to Payment</div>
+                <div style="font-size: 0.8rem; color: var(--gray-500);">↘️ -1.3 days improved</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                <div style="font-size: 2rem; font-weight: bold; color: var(--warning); margin-bottom: 0.5rem;">QAR 2.4M</div>
+                <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">Avg Contract Value</div>
+                <div style="font-size: 0.8rem; color: var(--gray-500);">↗️ +12% growth</div>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                <div style="font-size: 2rem; font-weight: bold; color: var(--secondary-teal); margin-bottom: 0.5rem;">98.5%</div>
+                <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">Client Satisfaction</div>
+                <div style="font-size: 0.8rem; color: var(--gray-500);">↗️ +2.5% improvement</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

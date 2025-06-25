@@ -1,0 +1,119 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Payments</h1>
+    <p class="page-subtitle">Track payment milestones and transaction history</p>
+    <div class="page-actions">
+        <button class="btn-primary">
+            <i class="fas fa-plus"></i>
+            Request Payment
+        </button>
+        <button class="btn-secondary">
+            <i class="fas fa-download"></i>
+            Export Report
+        </button>
+    </div>
+</div>
+
+<div class="stats-grid dashboard-grid-4">
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-wallet"></i>
+        </div>
+        <div class="stat-value">QAR 2.4M</div>
+        <div class="stat-label">Total in Escrow</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+        <div class="stat-value">QAR 1.8M</div>
+        <div class="stat-label">Received</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="stat-value">QAR 350K</div>
+        <div class="stat-label">Pending</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-calendar"></i>
+        </div>
+        <div class="stat-value">QAR 250K</div>
+        <div class="stat-label">Due This Month</div>
+    </div>
+</div>
+
+<div class="content-section">
+    <div class="section-header">
+        <h2 class="section-title">Payment Transactions</h2>
+        <div style="display: flex; gap: 1rem;">
+            <select style="padding: 0.5rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-700);">
+                <option>All Payments</option>
+                <option>Received</option>
+                <option>Pending</option>
+                <option>Overdue</option>
+            </select>
+        </div>
+    </div>
+    <div class="section-content">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Contract</th>
+                    <th>Milestone</th>
+                    <th>Amount</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Payment Method</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#PAY-2025-001</td>
+                    <td>Lusail Tower Construction</td>
+                    <td>Foundation Completion</td>
+                    <td>QAR 250,000</td>
+                    <td>Feb 15, 2025</td>
+                    <td><span class="status-badge completed">Received</span></td>
+                    <td>Bank Transfer</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="#" class="btn-action primary">
+                                <i class="fas fa-receipt"></i>
+                                Receipt
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#PAY-2025-002</td>
+                    <td>West Bay Office Complex</td>
+                    <td>Structural Work - Phase 1</td>
+                    <td>QAR 180,000</td>
+                    <td>Mar 20, 2025</td>
+                    <td><span class="status-badge pending">Pending</span></td>
+                    <td>Bank Transfer</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="#" class="btn-action primary">
+                                <i class="fas fa-bell"></i>
+                                Remind
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Add more payment rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

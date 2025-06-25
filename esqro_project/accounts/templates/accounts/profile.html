@@ -1,0 +1,116 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Profile Settings</h1>
+    <p class="page-subtitle">Manage your account information and preferences</p>
+</div>
+
+<div class="dashboard-grid dashboard-grid-2">
+    <div class="content-section">
+        <div class="section-header">
+            <h2 class="section-title">Account Information</h2>
+        </div>
+        <div class="section-content">
+            <div style="display: grid; gap: 1.5rem;">
+                <div>
+                    <label style="display: block; font-weight: var(--font-weight-medium); color: var(--gray-700); margin-bottom: 0.5rem;">Username</label>
+                    <input type="text" value="{{ user.username }}" readonly style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: var(--font-weight-medium); color: var(--gray-700); margin-bottom: 0.5rem;">Email</label>
+                    <input type="email" value="{{ user.email }}" readonly style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: var(--font-weight-medium); color: var(--gray-700); margin-bottom: 0.5rem;">First Name</label>
+                    <input type="text" value="{{ user.first_name|default:'Not specified' }}" readonly style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: var(--font-weight-medium); color: var(--gray-700); margin-bottom: 0.5rem;">Last Name</label>
+                    <input type="text" value="{{ user.last_name|default:'Not specified' }}" readonly style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: var(--font-weight-medium); color: var(--gray-700); margin-bottom: 0.5rem;">Company Name</label>
+                    <input type="text" value="{{ user.company_name|default:'Not specified' }}" readonly style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: var(--font-weight-medium); color: var(--gray-700); margin-bottom: 0.5rem;">Phone Number</label>
+                    <input type="tel" value="{{ user.phone_number|default:'Not specified' }}" readonly style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: var(--font-weight-medium); color: var(--gray-700); margin-bottom: 0.5rem;">Account Type</label>
+                    <input type="text" value="{% if user.is_contractor %}Contractor{% else %}Client{% endif %}" readonly style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: var(--font-weight-medium); color: var(--gray-700); margin-bottom: 0.5rem;">Member Since</label>
+                    <input type="text" value="{{ user.date_joined|date:'F d, Y' }}" readonly style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--gray-50);">
+                </div>
+            </div>
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--gray-200);">
+                <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">
+                    <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
+                    To update your account information, please contact your administrator.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-section">
+        <div class="section-header">
+            <h2 class="section-title">Account Activity</h2>
+        </div>
+        <div class="section-content">
+            <div style="display: grid; gap: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                    <div>
+                        <div style="font-weight: var(--font-weight-medium); color: var(--gray-800);">Last Login</div>
+                        <div style="font-size: 0.875rem; color: var(--gray-600);">
+                            {% if user.last_login %}
+                                {{ user.last_login|date:'F d, Y - g:i A' }}
+                            {% else %}
+                                Never logged in
+                            {% endif %}
+                        </div>
+                    </div>
+                    <i class="fas fa-sign-in-alt" style="color: var(--primary-blue); font-size: 1.25rem;"></i>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                    <div>
+                        <div style="font-weight: var(--font-weight-medium); color: var(--gray-800);">Active Contracts</div>
+                        <div style="font-size: 0.875rem; color: var(--gray-600);">12 contracts in progress</div>
+                    </div>
+                    <i class="fas fa-file-contract" style="color: var(--success); font-size: 1.25rem;"></i>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                    <div>
+                        <div style="font-weight: var(--font-weight-medium); color: var(--gray-800);">Total Transactions</div>
+                        <div style="font-size: 0.875rem; color: var(--gray-600);">QAR 8.7M processed</div>
+                    </div>
+                    <i class="fas fa-credit-card" style="color: var(--secondary-teal); font-size: 1.25rem;"></i>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                    <div>
+                        <div style="font-weight: var(--font-weight-medium); color: var(--gray-800);">Account Status</div>
+                        <div style="font-size: 0.875rem; color: var(--success);">
+                            <i class="fas fa-check-circle" style="margin-right: 0.25rem;"></i>
+                            Active & Verified
+                        </div>
+                    </div>
+                    <i class="fas fa-shield-alt" style="color: var(--success); font-size: 1.25rem;"></i>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg);">
+                    <div>
+                        <div style="font-weight: var(--font-weight-medium); color: var(--gray-800);">Account Created</div>
+                        <div style="font-size: 0.875rem; color: var(--gray-600);">{{ user.date_joined|date:'F d, Y' }}</div>
+                    </div>
+                    <i class="fas fa-calendar-plus" style="color: var(--primary-blue); font-size: 1.25rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
