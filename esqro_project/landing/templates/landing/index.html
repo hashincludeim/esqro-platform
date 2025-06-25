@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESQRO - Construction Payment Management Made Simple</title>
+    <meta name="description" content="Streamline construction payments, track milestones, and ensure payment transparency across all your contracts with ESQRO's cloud-based platform.">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>ESQRO</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="{% url 'accounts:login' %}" class="btn-outline">Log In</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Construction Payment Management Made Simple</h1>
+                    <p>Streamline payments, track milestones, and ensure transparency across all your construction contracts with Qatar's first specialized payment management platform.</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">200+</span>
+                            <span class="stat-label">Qatar Contractors</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">QAR 60B+</span>
+                            <span class="stat-label">Project Pipeline</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">99.9%</span>
+                            <span class="stat-label">Uptime SLA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="dashboard-mockup">
+                        <div class="mockup-header">
+                            <div class="mockup-controls">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="mockup-sidebar">
+                                <div class="mockup-nav-item active">Dashboard</div>
+                                <div class="mockup-nav-item">Contracts</div>
+                                <div class="mockup-nav-item">Payments</div>
+                                <div class="mockup-nav-item">Analytics</div>
+                            </div>
+                            <div class="mockup-main">
+                                <div class="mockup-card">
+                                    <div class="mockup-chart"></div>
+                                </div>
+                                <div class="mockup-cards-row">
+                                    <div class="mockup-small-card"></div>
+                                    <div class="mockup-small-card"></div>
+                                    <div class="mockup-small-card"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything you need to manage construction payments</h2>
+                <p>Built specifically for Qatar's construction industry with local compliance and banking integration</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>Contract Management</h3>
+                    <p>Digital storage with OCR, automated payment schedules, and variation order tracking</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Payment Processing</h3>
+                    <p>Real-time payment tracking, automated invoicing, and milestone-based payments</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Financial Analytics</h3>
+                    <p>Cash flow forecasting, payment performance metrics, and profitability analysis</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Qatar Compliance</h3>
+                    <p>Built-in QCB and MOCI compliance, audit trails, and regulatory reporting</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3>Bank Integration</h3>
+                    <p>Direct API connections to major Qatar banks for seamless payment processing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Access</h3>
+                    <p>Native iOS/Android apps with offline capability for field teams</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="container">
+            <h3>Trusted by Qatar's leading contractors</h3>
+            <div class="logos-grid">
+                <div class="logo-placeholder">Company Logo</div>
+                <div class="logo-placeholder">Company Logo</div>
+                <div class="logo-placeholder">Company Logo</div>
+                <div class="logo-placeholder">Company Logo</div>
+                <div class="logo-placeholder">Company Logo</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, transparent pricing</h2>
+                <p>Choose the plan that fits your business size and requirements</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">
+                        <span class="currency">QAR</span>
+                        <span class="amount">999</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i>Up to 5 active contracts</li>
+                        <li><i class="fas fa-check"></i>Basic payment tracking</li>
+                        <li><i class="fas fa-check"></i>Standard reporting</li>
+                        <li><i class="fas fa-check"></i>Email support</li>
+                    </ul>
+                    <button class="btn-outline">Get Started</button>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>Professional</h3>
+                    <div class="price">
+                        <span class="currency">QAR</span>
+                        <span class="amount">2,999</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i>Up to 25 active contracts</li>
+                        <li><i class="fas fa-check"></i>Advanced analytics</li>
+                        <li><i class="fas fa-check"></i>Bank integration</li>
+                        <li><i class="fas fa-check"></i>Mobile apps</li>
+                        <li><i class="fas fa-check"></i>Priority support</li>
+                    </ul>
+                    <button class="btn-primary">Start Free Trial</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">
+                        <span class="currency">QAR</span>
+                        <span class="amount">9,999</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i>Unlimited contracts</li>
+                        <li><i class="fas fa-check"></i>Multi-project dashboards</li>
+                        <li><i class="fas fa-check"></i>API access</li>
+                        <li><i class="fas fa-check"></i>Custom integrations</li>
+                        <li><i class="fas fa-check"></i>Dedicated account manager</li>
+                    </ul>
+                    <button class="btn-outline">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to streamline your construction payments?</h2>
+                <p>Join Qatar's leading contractors who trust ESQRO for their payment management</p>
+                <button class="btn-primary large">Start Your Free Trial</button>
+                <p class="cta-note">No credit card required • 14-day free trial • Setup in minutes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ESQRO</h3>
+                    <p>Qatar's first specialized construction payment management platform</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#">Security</a>
+                    <a href="#">Integrations</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#about">About</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#">Help Center</a>
+                    <a href="#">Documentation</a>
+                    <a href="#">Status</a>
+                    <a href="#">API</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ESQRO. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
