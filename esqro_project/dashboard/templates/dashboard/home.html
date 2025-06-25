@@ -68,91 +68,13 @@
     </div>
 </div>
 
-<div class="analytics-grid">
-    <div class="analytics-card">
-        <div class="analytics-header">
-            <h3 class="analytics-title">Contract Performance</h3>
-            <span class="analytics-period">Last 30 Days</span>
-        </div>
-        <div class="chart-container">
-            <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column;">
-                <div style="width: 120px; height: 120px; border-radius: 50%; position: relative; background: conic-gradient(#27ae60 0deg 125deg, #3498db 125deg 282deg, #f39c12 282deg 360deg); margin-bottom: 1rem;">
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--gray-800);">23</div>
-                        <div style="font-size: 0.8rem; color: var(--gray-600);">Total</div>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #27ae60;"></div>
-                        <span>Completed (8)</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #3498db;"></div>
-                        <span>Active (12)</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #f39c12;"></div>
-                        <span>Pending (3)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="content-card">
+    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--gray-800); margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        Recent Contract Activity
+        <a href="{% url 'dashboard:contracts' %}" class="btn btn-primary">View All Contracts</a>
+    </h2>
     
-    <div class="analytics-card">
-        <div class="analytics-header">
-            <h3 class="analytics-title">Monthly Transaction Volume</h3>
-            <span class="analytics-period">2025</span>
-        </div>
-        <div class="chart-container">
-            <div style="display: flex; align-items: end; justify-content: space-around; height: 100%; padding: 1rem;">
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-size: 0.8rem; color: var(--gray-800); margin-bottom: 0.5rem;">1.2M</div>
-                    <div style="width: 30px; height: 60px; background: var(--primary-blue); border-radius: 4px;"></div>
-                    <div style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem;">Jan</div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-size: 0.8rem; color: var(--gray-800); margin-bottom: 0.5rem;">1.8M</div>
-                    <div style="width: 30px; height: 90px; background: var(--primary-blue); border-radius: 4px;"></div>
-                    <div style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem;">Feb</div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-size: 0.8rem; color: var(--gray-800); margin-bottom: 0.5rem;">2.3M</div>
-                    <div style="width: 30px; height: 115px; background: var(--primary-blue); border-radius: 4px;"></div>
-                    <div style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem;">Mar</div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-size: 0.8rem; color: var(--gray-800); margin-bottom: 0.5rem;">1.9M</div>
-                    <div style="width: 30px; height: 95px; background: var(--primary-blue); border-radius: 4px;"></div>
-                    <div style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem;">Apr</div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-size: 0.8rem; color: var(--gray-800); margin-bottom: 0.5rem;">2.5M</div>
-                    <div style="width: 30px; height: 125px; background: var(--success); border-radius: 4px;"></div>
-                    <div style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem;">May</div>
-                </div>
-            </div>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-            <div style="text-align: center; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg);">
-                <div style="font-size: 1.5rem; font-weight: bold; color: var(--success); margin-bottom: 0.5rem;">↗️ 23%</div>
-                <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase;">Growth vs. Last Quarter</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg);">
-                <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">QAR 8.7M</div>
-                <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase;">Total Volume (YTD)</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="content-section">
-    <div class="section-header">
-        <h2 class="section-title">Recent Contract Activity</h2>
-        <a href="{% url 'dashboard:contracts' %}" class="btn-primary">View All Contracts</a>
-    </div>
-    <div class="section-content">
+    <div style="overflow-x: auto;">
         <table class="data-table">
             <thead>
                 <tr>
@@ -163,15 +85,14 @@
                     <th>Status</th>
                     <th>Progress</th>
                     <th>Due Date</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>#CON-2025-001</td>
-                    <td>Lusail Tower Construction</td>
+                    <td style="font-weight: 500;">Lusail Tower Construction</td>
                     <td>Qatari Diar</td>
-                    <td>QAR 850,000</td>
+                    <td style="font-weight: 500;">QAR 850,000</td>
                     <td><span class="status-badge active">Active</span></td>
                     <td>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -182,20 +103,12 @@
                         </div>
                     </td>
                     <td>Mar 15, 2025</td>
-                    <td>
-                        <div class="action-buttons">
-                            <a href="#" class="btn-action primary">
-                                <i class="fas fa-eye"></i>
-                                View
-                            </a>
-                        </div>
-                    </td>
                 </tr>
                 <tr>
                     <td>#CON-2025-002</td>
-                    <td>West Bay Office Complex</td>
+                    <td style="font-weight: 500;">West Bay Office Complex</td>
                     <td>Barwa Real Estate</td>
-                    <td>QAR 1,200,000</td>
+                    <td style="font-weight: 500;">QAR 1,200,000</td>
                     <td><span class="status-badge pending">Pending Approval</span></td>
                     <td>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -206,20 +119,12 @@
                         </div>
                     </td>
                     <td>Apr 20, 2025</td>
-                    <td>
-                        <div class="action-buttons">
-                            <a href="#" class="btn-action primary">
-                                <i class="fas fa-edit"></i>
-                                Review
-                            </a>
-                        </div>
-                    </td>
                 </tr>
                 <tr>
                     <td>#CON-2024-078</td>
-                    <td>Msheireb Residential Phase 3</td>
+                    <td style="font-weight: 500;">Msheireb Residential Phase 3</td>
                     <td>Msheireb Properties</td>
-                    <td>QAR 450,000</td>
+                    <td style="font-weight: 500;">QAR 450,000</td>
                     <td><span class="status-badge completed">Completed</span></td>
                     <td>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -230,14 +135,6 @@
                         </div>
                     </td>
                     <td>Feb 28, 2025</td>
-                    <td>
-                        <div class="action-buttons">
-                            <a href="#" class="btn-action secondary">
-                                <i class="fas fa-download"></i>
-                                Download
-                            </a>
-                        </div>
-                    </td>
                 </tr>
             </tbody>
         </table>
