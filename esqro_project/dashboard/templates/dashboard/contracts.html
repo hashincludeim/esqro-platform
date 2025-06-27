@@ -18,32 +18,40 @@
 
 <div class="stats-grid dashboard-grid-4">
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-file-contract"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
         </div>
         <div class="stat-value">{{ contracts.paginator.count }}</div>
         <div class="stat-label">Total Contracts</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-play-circle"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-play-circle"></i>
+            </div>
         </div>
         <div class="stat-value">{{ contracts.object_list|length }}</div>
         <div class="stat-label">Showing</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-clock"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
         </div>
         <div class="stat-value">{{ search_query|length|default:"0" }}</div>
         <div class="stat-label">Search Results</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-filter"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-filter"></i>
+            </div>
         </div>
         <div class="stat-value">{{ status_filter|default:"All" }}</div>
         <div class="stat-label">Filter Applied</div>

@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from .models import Contract, ContractMilestone
 from .forms import ContractCreateForm, ContractMilestoneForm
 from datetime import date, timedelta
+from django.urls import reverse
 
 @login_required
 def dashboard_home(request):
@@ -82,8 +83,8 @@ def contract_create(request):
             contract = form.save(commit=False)
             contract.contractor = request.user
             contract.save()
-            messages.success(request, f'Contract {contract.contract_number} created successfully!')
-            return redirect('dashboard:contract_detail', contract_id=contract.id)
+            # messages.success(request, f'Contract {contract.contract_number} created successfully!')
+            return redirect(f"{reverse('dashboard:contract_detail', kwargs={'contract_id': contract.id})}?created=true")
     else:
         form = ContractCreateForm()
     
@@ -100,6 +101,10 @@ def contract_detail(request, contract_id):
     contract = get_object_or_404(Contract, id=contract_id, contractor=request.user)
     milestones = contract.milestones.all()
     
+    # Check if this is a newly created contract
+    if request.GET.get('created') == 'true':
+        messages.success(request, f'Contract {contract.contract_number} created successfully!')
+
     context = {
         'user': request.user,
         'page_title': f'Contract {contract.contract_number}',

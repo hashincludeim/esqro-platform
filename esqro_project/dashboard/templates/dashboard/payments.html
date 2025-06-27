@@ -18,38 +18,45 @@
 
 <div class="stats-grid dashboard-grid-4">
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-flag-checkered"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-flag-checkered"></i>
+            </div>
         </div>
         <div class="stat-value">{{ stats.total_milestones }}</div>
         <div class="stat-label">Total Milestones</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-check-circle"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
         </div>
         <div class="stat-value">{{ stats.completed_payments }}</div>
         <div class="stat-label">Completed</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-clock"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
         </div>
         <div class="stat-value">{{ stats.pending_payments }}</div>
         <div class="stat-label">Pending</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-dollar-sign"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
         </div>
         <div class="stat-value">QAR {{ stats.total_payment_value|floatformat:0|default:"0" }}</div>
         <div class="stat-label">Total Value</div>
     </div>
 </div>
-
 <div class="content-section">
     <div class="section-header">
         <h2 class="section-title">Payment Milestones</h2>

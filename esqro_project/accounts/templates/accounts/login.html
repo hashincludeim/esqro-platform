@@ -349,10 +349,12 @@
             
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        <i class="fas fa-{% if message.tags == 'error' %}exclamation-triangle{% else %}check-circle{% endif %}"></i>
-                        {{ message }}
-                    </div>
+                    {% if message.tags == 'error' %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <i class="fas fa-{% if message.tags == 'error' %}exclamation-triangle{% else %}check-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
             
