@@ -1,0 +1,274 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Create New Contract</h1>
+    <p class="page-subtitle">Set up a new construction contract with escrow protection</p>
+</div>
+
+<div class="content-card">
+    <form method="post" enctype="multipart/form-data" id="contractForm">
+        {% csrf_token %}
+        
+        <!-- Contract Document Upload -->
+        <div style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-teal) 100%); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; color: var(--white);">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <div style="width: 48px; height: 48px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-upload" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                    <h3 style="margin: 0; font-size: 1.25rem;">Upload Contract Document</h3>
+                    <p style="margin: 0; opacity: 0.9;">Upload the main contract document (PDF, DOC, DOCX)</p>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 0;">
+                {{ form.contract_document }}
+                {% if form.contract_document.errors %}
+                    <div style="color: #fecaca; font-size: 0.875rem; margin-top: 0.5rem;">
+                        {{ form.contract_document.errors.0 }}
+                    </div>
+                {% endif %}
+                <small style="opacity: 0.8; font-size: 0.875rem;">{{ form.contract_document.help_text }}</small>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <!-- Left Column -->
+            <div>
+                <h3 style="color: var(--gray-800); margin-bottom: 1.5rem; font-size: 1.25rem; font-weight: 600;">Project Information</h3>
+                
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">
+                        <i class="fas fa-project-diagram"></i> {{ form.title.label }}
+                    </label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="form-error">{{ form.title.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">
+                        <i class="fas fa-align-left"></i> {{ form.description.label }}
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="form-error">{{ form.description.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.contract_type.id_for_label }}" class="form-label">
+                        <i class="fas fa-building"></i> {{ form.contract_type.label }}
+                    </label>
+                    {{ form.contract_type }}
+                    {% if form.contract_type.errors %}
+                        <div class="form-error">{{ form.contract_type.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.project_location.id_for_label }}" class="form-label">
+                        <i class="fas fa-map-marker-alt"></i> {{ form.project_location.label }}
+                    </label>
+                    {{ form.project_location }}
+                    {% if form.project_location.errors %}
+                        <div class="form-error">{{ form.project_location.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <h3 style="color: var(--gray-800); margin: 2rem 0 1.5rem 0; font-size: 1.25rem; font-weight: 600;">Timeline</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="{{ form.start_date.id_for_label }}" class="form-label">
+                            <i class="fas fa-calendar-plus"></i> {{ form.start_date.label }}
+                        </label>
+                        {{ form.start_date }}
+                        {% if form.start_date.errors %}
+                            <div class="form-error">{{ form.start_date.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.end_date.id_for_label }}" class="form-label">
+                            <i class="fas fa-calendar-check"></i> {{ form.end_date.label }}
+                        </label>
+                        {{ form.end_date }}
+                        {% if form.end_date.errors %}
+                            <div class="form-error">{{ form.end_date.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <h3 style="color: var(--gray-800); margin-bottom: 1.5rem; font-size: 1.25rem; font-weight: 600;">Client Information</h3>
+                
+                <div class="form-group">
+                    <label for="{{ form.client_name.id_for_label }}" class="form-label">
+                        <i class="fas fa-user"></i> {{ form.client_name.label }}
+                    </label>
+                    {{ form.client_name }}
+                    {% if form.client_name.errors %}
+                        <div class="form-error">{{ form.client_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.client_email.id_for_label }}" class="form-label">
+                        <i class="fas fa-envelope"></i> {{ form.client_email.label }}
+                    </label>
+                    {{ form.client_email }}
+                    {% if form.client_email.errors %}
+                        <div class="form-error">{{ form.client_email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.client_phone.id_for_label }}" class="form-label">
+                        <i class="fas fa-phone"></i> {{ form.client_phone.label }}
+                    </label>
+                    {{ form.client_phone }}
+                    {% if form.client_phone.errors %}
+                        <div class="form-error">{{ form.client_phone.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.client_company.id_for_label }}" class="form-label">
+                        <i class="fas fa-building"></i> {{ form.client_company.label }}
+                    </label>
+                    {{ form.client_company }}
+                    {% if form.client_company.errors %}
+                        <div class="form-error">{{ form.client_company.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <h3 style="color: var(--gray-800); margin: 2rem 0 1.5rem 0; font-size: 1.25rem; font-weight: 600;">Financial Details</h3>
+                
+                <div class="form-group">
+                    <label for="{{ form.total_value.id_for_label }}" class="form-label">
+                        <i class="fas fa-dollar-sign"></i> {{ form.total_value.label }} (QAR)
+                    </label>
+                    {{ form.total_value }}
+                    {% if form.total_value.errors %}
+                        <div class="form-error">{{ form.total_value.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.escrow_percentage.id_for_label }}" class="form-label">
+                        <i class="fas fa-shield-alt"></i> {{ form.escrow_percentage.label }}
+                    </label>
+                    {{ form.escrow_percentage }}
+                    {% if form.escrow_percentage.errors %}
+                        <div class="form-error">{{ form.escrow_percentage.errors.0 }}</div>
+                    {% endif %}
+                    <small style="color: var(--gray-600); font-size: 0.875rem;">Percentage of contract value to be held in escrow</small>
+                </div>
+
+                <!-- Escrow Amount Preview -->
+                <div style="background: var(--gray-50); padding: 1rem; border-radius: var(--radius-lg); margin-top: 1rem;">
+                    <div style="display: flex; justify-content: between; align-items: center;">
+                        <span style="color: var(--gray-600); font-weight: 500;">Escrow Amount:</span>
+                        <span id="escrowAmount" style="color: var(--primary-blue); font-weight: 600; font-size: 1.1rem;">QAR 0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Errors -->
+        {% if form.non_field_errors %}
+            <div style="background: rgba(239, 68, 68, 0.1); color: var(--error); padding: 1rem; border-radius: var(--radius-lg); margin: 1rem 0;">
+                {{ form.non_field_errors.0 }}
+            </div>
+        {% endif %}
+
+        <!-- Form Actions -->
+        <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--gray-200);">
+            <a href="{% url 'dashboard:contracts' %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+                <i class="fas fa-save"></i> Create Contract
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 600;
+        color: var(--gray-700);
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .form-label i {
+        margin-right: 0.5rem;
+        color: var(--primary-blue);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        background: var(--white);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-error {
+        color: var(--error);
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .content-card > form > div:nth-child(3) {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+    }
+</style>
+
+<script>
+    // Calculate escrow amount in real-time
+    function updateEscrowAmount() {
+        const totalValue = parseFloat(document.getElementById('{{ form.total_value.id_for_label }}').value) || 0;
+        const escrowPercentage = parseFloat(document.getElementById('{{ form.escrow_percentage.id_for_label }}').value) || 0;
+        const escrowAmount = (totalValue * escrowPercentage) / 100;
+        
+        document.getElementById('escrowAmount').textContent = 
+            'QAR ' + escrowAmount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+
+    document.getElementById('{{ form.total_value.id_for_label }}').addEventListener('input', updateEscrowAmount);
+    document.getElementById('{{ form.escrow_percentage.id_for_label }}').addEventListener('input', updateEscrowAmount);
+
+    // Form submission handling
+    document.getElementById('contractForm').addEventListener('submit', function() {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Contract...';
+    });
+
+    // Initialize escrow calculation
+    updateEscrowAmount();
+</script>
+{% endblock %}

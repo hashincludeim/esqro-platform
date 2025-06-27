@@ -5,11 +5,11 @@
     <h1 class="page-title">Payments</h1>
     <p class="page-subtitle">Track payment milestones and transaction history</p>
     <div class="page-actions">
-        <button class="btn-primary">
+        <button class="btn btn-primary">
             <i class="fas fa-plus"></i>
             Request Payment
         </button>
-        <button class="btn-secondary">
+        <button class="btn btn-secondary" onclick="window.print()">
             <i class="fas fa-download"></i>
             Export Report
         </button>
@@ -18,102 +18,140 @@
 
 <div class="stats-grid dashboard-grid-4">
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-wallet"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-flag-checkered"></i>
+            </div>
         </div>
-        <div class="stat-value">QAR 2.4M</div>
-        <div class="stat-label">Total in Escrow</div>
+        <div class="stat-value">{{ stats.total_milestones }}</div>
+        <div class="stat-label">Total Milestones</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-arrow-down"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
         </div>
-        <div class="stat-value">QAR 1.8M</div>
-        <div class="stat-label">Received</div>
+        <div class="stat-value">{{ stats.completed_payments }}</div>
+        <div class="stat-label">Completed</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-clock"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
         </div>
-        <div class="stat-value">QAR 350K</div>
+        <div class="stat-value">{{ stats.pending_payments }}</div>
         <div class="stat-label">Pending</div>
     </div>
     
     <div class="stat-card">
-        <div class="stat-icon">
-            <i class="fas fa-calendar"></i>
+        <div class="stat-header">
+            <div class="stat-icon">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
         </div>
-        <div class="stat-value">QAR 250K</div>
-        <div class="stat-label">Due This Month</div>
+        <div class="stat-value">QAR {{ stats.total_payment_value|floatformat:0|default:"0" }}</div>
+        <div class="stat-label">Total Value</div>
     </div>
 </div>
-
 <div class="content-section">
     <div class="section-header">
-        <h2 class="section-title">Payment Transactions</h2>
+        <h2 class="section-title">Payment Milestones</h2>
         <div style="display: flex; gap: 1rem;">
             <select style="padding: 0.5rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-700);">
-                <option>All Payments</option>
-                <option>Received</option>
+                <option>All Milestones</option>
+                <option>Completed</option>
                 <option>Pending</option>
+                <option>In Progress</option>
                 <option>Overdue</option>
             </select>
         </div>
     </div>
+    
     <div class="section-content">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Transaction ID</th>
-                    <th>Contract</th>
-                    <th>Milestone</th>
-                    <th>Amount</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Payment Method</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>#PAY-2025-001</td>
-                    <td>Lusail Tower Construction</td>
-                    <td>Foundation Completion</td>
-                    <td>QAR 250,000</td>
-                    <td>Feb 15, 2025</td>
-                    <td><span class="status-badge completed">Received</span></td>
-                    <td>Bank Transfer</td>
-                    <td>
-                        <div class="action-buttons">
-                            <a href="#" class="btn-action primary">
-                                <i class="fas fa-receipt"></i>
-                                Receipt
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>#PAY-2025-002</td>
-                    <td>West Bay Office Complex</td>
-                    <td>Structural Work - Phase 1</td>
-                    <td>QAR 180,000</td>
-                    <td>Mar 20, 2025</td>
-                    <td><span class="status-badge pending">Pending</span></td>
-                    <td>Bank Transfer</td>
-                    <td>
-                        <div class="action-buttons">
-                            <a href="#" class="btn-action primary">
-                                <i class="fas fa-bell"></i>
-                                Remind
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Add more payment rows here -->
-            </tbody>
-        </table>
+        {% if milestones %}
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Contract</th>
+                        <th>Milestone</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Completion</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for milestone in milestones %}
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600; color: var(--primary-blue);">{{ milestone.contract.contract_number }}</div>
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">{{ milestone.contract.title|truncatechars:30 }}</div>
+                        </td>
+                        <td>
+                            <div style="font-weight: 500;">{{ milestone.title }}</div>
+                            {% if milestone.description %}
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">{{ milestone.description|truncatechars:40 }}</div>
+                            {% endif %}
+                        </td>
+                        <td style="font-weight: 600; color: var(--success);">QAR {{ milestone.payment_amount|floatformat:0 }}</td>
+                        <td>
+                            {{ milestone.due_date|date:"M d, Y" }}
+                            {% if milestone.due_date < today and milestone.status != 'completed' %}
+                                <br><small style="color: var(--error);">Overdue</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="status-badge {% if milestone.status == 'completed' %}completed{% elif milestone.status == 'pending' %}pending{% elif milestone.status == 'in_progress' %}active{% else %}{{ milestone.status }}{% endif %}">
+                                {{ milestone.get_status_display }}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <div style="flex: 1; background: var(--gray-200); height: 6px; border-radius: 3px; overflow: hidden;">
+                                    <div style="width: {{ milestone.completion_percentage }}%; height: 100%; background: {% if milestone.completion_percentage == 100 %}var(--success){% elif milestone.completion_percentage >= 50 %}var(--primary-blue){% else %}var(--warning){% endif %}; border-radius: 3px;"></div>
+                                </div>
+                                <span style="font-size: 0.75rem; color: var(--gray-600);">{{ milestone.completion_percentage|floatformat:0 }}%</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                {% if milestone.status == 'completed' %}
+                                <button class="btn-action primary" title="View Receipt">
+                                    <i class="fas fa-receipt"></i>
+                                </button>
+                                {% else %}
+                                <button class="btn-action primary" title="Process Payment">
+                                    <i class="fas fa-credit-card"></i>
+                                </button>
+                                {% endif %}
+                                <a href="{% url 'dashboard:contract_detail' milestone.contract.id %}" class="btn-action secondary" title="View Contract">
+                                    <i class="fas fa-file-contract"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div style="text-align: center; padding: 3rem;">
+                <div style="width: 80px; height: 80px; background: var(--gray-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <i class="fas fa-credit-card" style="font-size: 2rem; color: var(--gray-400);"></i>
+                </div>
+                <h3 style="color: var(--gray-800); margin-bottom: 1rem;">No Payment Milestones</h3>
+                <p style="color: var(--gray-600); margin-bottom: 2rem;">
+                    Create contracts with payment milestones to track your escrow payments.
+                </p>
+                <a href="{% url 'dashboard:contract_create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Create Contract
+                </a>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

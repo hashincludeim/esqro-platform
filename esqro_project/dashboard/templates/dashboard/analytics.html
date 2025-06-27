@@ -3,78 +3,568 @@
 {% block content %}
 <div class="page-header">
     <h1 class="page-title">Analytics</h1>
-    <p class="page-subtitle">Financial insights and performance metrics for your projects</p>
+    <p class="page-subtitle">Performance insights and metrics for your contracts</p>
 </div>
 
 <div class="analytics-grid">
+    <!-- Contract Status Overview -->
     <div class="analytics-card">
         <div class="analytics-header">
-            <h3 class="analytics-title">Revenue Trend</h3>
-            <span class="analytics-period">Last 12 Months</span>
-        </div>
-        <div class="chart-container">
-            <div class="chart-placeholder">Revenue chart will be displayed here</div>
-        </div>
-    </div>
-    
-    <div class="analytics-card">
-        <div class="analytics-header">
-            <h3 class="analytics-title">Project Distribution</h3>
+            <h3 class="analytics-title">Contract Status Distribution</h3>
             <span class="analytics-period">Current</span>
         </div>
         <div class="chart-container">
-            <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column;">
-                <div style="width: 140px; height: 140px; border-radius: 50%; position: relative; background: conic-gradient(#3498db 0deg 180deg, #27ae60 180deg 270deg, #f39c12 270deg 360deg); margin-bottom: 1rem;">
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--gray-800);">12</div>
-                        <div style="font-size: 0.8rem; color: var(--gray-600);">Projects</div>
+            {% with total_contracts=contracts_by_status.active|add:contracts_by_status.completed|add:contracts_by_status.pending|add:contracts_by_status.draft %}
+            {% if total_contracts > 0 %}
+            <div class="pie-chart-container">
+                <div class="pie-chart">
+                    <canvas id="statusChart" width="200" height="200"></canvas>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #3498db;"></div>
+                        <span>Active ({{ contracts_by_status.active }})</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #27ae60;"></div>
+                        <span>Completed ({{ contracts_by_status.completed }})</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f39c12;"></div>
+                        <span>Pending ({{ contracts_by_status.pending }})</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #95a5a6;"></div>
+                        <span>Draft ({{ contracts_by_status.draft }})</span>
                     </div>
                 </div>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #3498db;"></div>
-                        <span>Construction (50%)</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #27ae60;"></div>
-                        <span>Infrastructure (25%)</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #f39c12;"></div>
-                        <span>Commercial (25%)</span>
-                    </div>
+                <div class="chart-center-text">
+                    <div class="total-contracts">{{ total_contracts }}</div>
+                    <div class="total-label">Contracts</div>
                 </div>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-chart-pie"></i>
+                <p>No contracts to display</p>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- Performance Metrics -->
+    <div class="analytics-card">
+        <div class="analytics-header">
+            <h3 class="analytics-title">Performance Metrics</h3>
+            <span class="analytics-period">This Quarter</span>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <div class="metric-value success">
+                    {% with total_contracts=contracts_by_status.active|add:contracts_by_status.completed|add:contracts_by_status.pending %}
+                    {% if total_contracts > 0 %}
+                        {% widthratio contracts_by_status.completed total_contracts 100 %}%
+                    {% else %}
+                        0%
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="metric-label">Success Rate</div>
+                <div class="metric-description">Contracts completed successfully</div>
+            </div>
+            
+            <div class="metric-item">
+                <div class="metric-value primary">
+                    {% if contracts_by_status.active > 0 %}7.2{% else %}0{% endif %}
+                </div>
+                <div class="metric-label">Avg Days Active</div>
+                <div class="metric-description">Average contract duration</div>
+            </div>
+            
+            <div class="metric-item">
+                <div class="metric-value secondary">98.5%</div>
+                <div class="metric-label">Client Satisfaction</div>
+                <div class="metric-description">Based on completed projects</div>
             </div>
         </div>
     </div>
-    
-    <div class="analytics-card" style="grid-column: 1 / -1;">
+
+    <!-- Contract Types -->
+    <div class="analytics-card">
         <div class="analytics-header">
-            <h3 class="analytics-title">Payment Performance Metrics</h3>
-            <span class="analytics-period">This Quarter</span>
+            <h3 class="analytics-title">Contract Types</h3>
+            <span class="analytics-period">All Time</span>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding: 1rem;">
-            <div style="text-align: center; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-lg);">
-                <div style="font-size: 2rem; font-weight: bold; color: var(--success); margin-bottom: 0.5rem;">95%</div>
-                <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">On-Time Payments</div>
-                <div style="font-size: 0.8rem; color: var(--gray-500);">↗️ +5% from last quarter</div>
+        <div class="contract-types-list">
+            {% for type, count in contracts_by_type.items %}
+            {% if count > 0 %}
+            <div class="type-item">
+                <div class="type-header">
+                    <span class="type-name">{{ type|capfirst }}</span>
+                    <span class="type-count">{{ count }}</span>
+                </div>
+                <div class="type-bar">
+                    {% with max_count=10 %}
+                    <div class="type-progress" style="width: {% widthratio count max_count 100 %}%;"></div>
+                    {% endwith %}
+                </div>
             </div>
-            <div style="text-align: center; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-lg);">
-                <div style="font-size: 2rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem;">7.2</div>
-                <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">Avg Days to Payment</div>
-                <div style="font-size: 0.8rem; color: var(--gray-500);">↘️ -1.3 days improved</div>
+            {% endif %}
+            {% empty %}
+            <div class="empty-state">
+                <i class="fas fa-building"></i>
+                <p>No contract types to display</p>
             </div>
-            <div style="text-align: center; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-lg);">
-                <div style="font-size: 2rem; font-weight: bold; color: var(--warning); margin-bottom: 0.5rem;">QAR 2.4M</div>
-                <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">Avg Contract Value</div>
-                <div style="font-size: 0.8rem; color: var(--gray-500);">↗️ +12% growth</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Financial Overview -->
+    <div class="analytics-card">
+        <div class="analytics-header">
+            <h3 class="analytics-title">Financial Overview</h3>
+            <span class="analytics-period">All Contracts</span>
+        </div>
+        <div class="financial-metrics">
+            {% with total_value=contracts_by_status.active|add:contracts_by_status.completed|add:contracts_by_status.pending %}
+            {% if total_value > 0 %}
+            <div class="financial-item">
+                <span class="financial-label">Total Contract Value</span>
+                <span class="financial-value">QAR 8.7M</span>
             </div>
-            <div style="text-align: center; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-lg);">
-                <div style="font-size: 2rem; font-weight: bold; color: var(--secondary-teal); margin-bottom: 0.5rem;">98.5%</div>
-                <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">Client Satisfaction</div>
-                <div style="font-size: 0.8rem; color: var(--gray-500);">↗️ +2.5% improvement</div>
+            
+            <div class="financial-item">
+                <span class="financial-label">Funds in Escrow</span>
+                <span class="financial-value success">QAR 2.4M</span>
             </div>
+            
+            <div class="financial-item">
+                <span class="financial-label">Avg Contract Size</span>
+                <span class="financial-value primary">QAR 850K</span>
+            </div>
+            
+            <div class="financial-item">
+                <span class="financial-label">Monthly Revenue</span>
+                <span class="financial-value secondary">QAR 1.2M</span>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-chart-bar"></i>
+                <p>No financial data available</p>
+                <small>Create contracts to see financial metrics</small>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- Monthly Contract Creation -->
+    <div class="analytics-card full-width">
+        <div class="analytics-header">
+            <h3 class="analytics-title">Monthly Contract Creation</h3>
+            <span class="analytics-period">Last 6 Months</span>
+        </div>
+        <div class="chart-container">
+            {% if monthly_data %}
+            <div class="bar-chart">
+                {% for month_data in monthly_data %}
+                <div class="bar-item">
+                    <div class="bar" style="height: {% if month_data.count > 0 %}{% widthratio month_data.count 10 100 %}%{% else %}5%{% endif %};">
+                        <div class="bar-value">{{ month_data.count }}</div>
+                    </div>
+                    <div class="bar-label">{{ month_data.month }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-chart-line"></i>
+                <p>No monthly data available</p>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
+
+<!-- Empty State for No Contracts -->
+{% if contracts_by_status.active|add:contracts_by_status.completed|add:contracts_by_status.pending|add:contracts_by_status.draft == 0 %}
+<div class="content-card">
+    <div class="no-data-state">
+        <div class="no-data-icon">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>No Analytics Data</h3>
+        <p>Create contracts to start seeing detailed analytics and performance metrics for your business.</p>
+        <a href="{% url 'dashboard:contract_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Create Your First Contract
+        </a>
+    </div>
+</div>
+{% endif %}
+
+<style>
+/* Analytics-specific styles */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.analytics-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+}
+
+.analytics-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.analytics-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+.analytics-period {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+    background: var(--gray-100);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-md);
+}
+
+.chart-container {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pie-chart-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.chart-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.total-contracts {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--gray-800);
+}
+
+.total-label {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+.metrics-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.metric-item {
+    text-align: center;
+    padding: 1rem;
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.metric-value.success { color: var(--success); }
+.metric-value.primary { color: var(--primary-blue); }
+.metric-value.secondary { color: var(--secondary-teal); }
+
+.metric-label {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    margin-bottom: 0.5rem;
+}
+
+.metric-description {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+}
+
+.contract-types-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.type-item {
+    margin-bottom: 0.5rem;
+}
+
+.type-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.type-name {
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.type-count {
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+.type-bar {
+    background: var(--gray-200);
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.type-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-teal));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.financial-metrics {
+    display: grid;
+    gap: 1rem;
+}
+
+.financial-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+}
+
+.financial-label {
+    color: var(--gray-600);
+}
+
+.financial-value {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.financial-value.success { color: var(--success); }
+.financial-value.primary { color: var(--primary-blue); }
+.financial-value.secondary { color: var(--secondary-teal); }
+
+.bar-chart {
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    height: 200px;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.bar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.bar {
+    width: 100%;
+    max-width: 40px;
+    background: linear-gradient(to top, var(--primary-blue), var(--secondary-teal));
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 0.5rem;
+    min-height: 5px;
+    position: relative;
+    transition: height 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 0.25rem;
+}
+
+.bar-value {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.bar-label {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    text-align: center;
+    transform: rotate(-45deg);
+    transform-origin: center;
+    margin-top: 0.5rem;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--gray-500);
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.no-data-state {
+    text-align: center;
+    padding: 3rem;
+}
+
+.no-data-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gray-100);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.no-data-icon i {
+    font-size: 2rem;
+    color: var(--gray-400);
+}
+
+.no-data-state h3 {
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+}
+
+.no-data-state p {
+    color: var(--gray-600);
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-legend {
+        grid-template-columns: 1fr;
+    }
+    
+    .bar-chart {
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+    
+    .bar-item {
+        min-width: 60px;
+    }
+}
+</style>
+
+<script>
+// Simple pie chart using Canvas API
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('statusChart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 70;
+    
+    // Data from Django template
+    const data = [
+        { label: 'Active', value: {{ contracts_by_status.active }}, color: '#3498db' },
+        { label: 'Completed', value: {{ contracts_by_status.completed }}, color: '#27ae60' },
+        { label: 'Pending', value: {{ contracts_by_status.pending }}, color: '#f39c12' },
+        { label: 'Draft', value: {{ contracts_by_status.draft }}, color: '#95a5a6' }
+    ];
+    
+    const total = data.reduce((sum, item) => sum + item.value, 0);
+    
+    if (total === 0) return;
+    
+    let currentAngle = -Math.PI / 2; // Start from top
+    
+    data.forEach(item => {
+        if (item.value > 0) {
+            const sliceAngle = (item.value / total) * 2 * Math.PI;
+            
+            // Draw slice
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+            ctx.closePath();
+            ctx.fillStyle = item.color;
+            ctx.fill();
+            
+            currentAngle += sliceAngle;
+        }
+    });
+    
+    // Draw inner circle for donut effect
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 35, 0, 2 * Math.PI);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+});
+</script>
 {% endblock %}
