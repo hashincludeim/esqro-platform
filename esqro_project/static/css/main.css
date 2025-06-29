@@ -722,6 +722,9 @@
   --------------------------------------------------------------*/
   .hero {
     padding: 80px 0;
+    position: relative; /* Add this */
+    overflow: hidden; /* Add this */
+    /* Remove or comment out the existing dark-background class */
   }
   
   .hero .hero-content {
@@ -891,8 +894,23 @@
       inset: auto;
       margin-top: 30px;
     }
+
   }
-  
+
+  .hero .container {
+    position: relative;
+    z-index: 10;
+  }
+
+/* Ensure text remains readable */
+  .hero h1,
+  .hero p,
+  .hero .hero-features {
+      position: relative;
+      z-index: 10;
+  } 
+
+
   /*--------------------------------------------------------------
   # About Section
   --------------------------------------------------------------*/

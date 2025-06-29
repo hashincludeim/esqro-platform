@@ -1,0 +1,177 @@
+/* Silk Wave Animation Background */
+.silk-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.silk-wave {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        rgba(37, 99, 235, 0.15) 0%,   /* Your primary blue - brighter */
+        rgba(8, 145, 178, 0.18) 25%,  /* Your secondary teal - brighter */
+        rgba(59, 130, 246, 0.12) 50%, /* Lighter blue */
+        rgba(14, 165, 233, 0.16) 75%, /* Sky blue */
+        rgba(37, 99, 235, 0.15) 100%
+    );
+    animation: silk-flow 20s ease-in-out infinite;
+    transform-origin: center center;
+}
+
+.silk-wave:nth-child(1) {
+    animation-delay: 0s;
+    animation-duration: 25s;
+    opacity: 0.6;
+}
+
+.silk-wave:nth-child(2) {
+    animation-delay: -5s;
+    animation-duration: 30s;
+    opacity: 0.4;
+    animation-direction: reverse;
+}
+
+.silk-wave:nth-child(3) {
+    animation-delay: -10s;
+    animation-duration: 35s;
+    opacity: 0.3;
+}
+
+.silk-wave:nth-child(4) {
+    animation-delay: -15s;
+    animation-duration: 40s;
+    opacity: 0.2;
+    animation-direction: reverse;
+}
+
+@keyframes silk-flow {
+    0% {
+        transform: translateX(-50%) translateY(-50%) rotate(0deg) scale(1);
+        border-radius: 20% 25% 30% 35%;
+    }
+    25% {
+        transform: translateX(-45%) translateY(-55%) rotate(90deg) scale(1.1);
+        border-radius: 35% 20% 25% 30%;
+    }
+    50% {
+        transform: translateX(-55%) translateY(-45%) rotate(180deg) scale(0.9);
+        border-radius: 30% 35% 20% 25%;
+    }
+    75% {
+        transform: translateX(-45%) translateY(-55%) rotate(270deg) scale(1.05);
+        border-radius: 25% 30% 35% 20%;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%) rotate(360deg) scale(1);
+        border-radius: 20% 25% 30% 35%;
+    }
+}
+
+/* Enhanced silk particles */
+.silk-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.silk-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(59, 130, 246, 0.18);
+    border-radius: 50%;
+    animation: float 15s linear infinite;
+}
+
+.silk-particle:nth-child(odd) {
+    background: rgba(96, 165, 250, 0.15);
+    animation-duration: 20s;
+    animation-delay: -5s;
+}
+
+.silk-particle:nth-child(3n) {
+    animation-duration: 25s;
+    animation-delay: -10s;
+    width: 6px;
+    height: 6px;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Silk gradient overlay */
+.silk-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(29, 78, 216, 0.08) 0%,
+        transparent 30%,
+        rgba(37, 99, 235, 0.12) 60%,
+        transparent 100%
+    );
+    animation: gradient-shift 30s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% {
+        background: linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.02) 0%,
+            transparent 30%,
+            rgba(8, 145, 178, 0.03) 60%,
+            transparent 100%
+        );
+    }
+    50% {
+        background: linear-gradient(
+            225deg,
+            rgba(8, 145, 178, 0.03) 0%,
+            transparent 30%,
+            rgba(37, 99, 235, 0.02) 60%,
+            transparent 100%
+        );
+    }
+}
+
+/* Performance optimizations */
+.silk-background * {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .silk-wave,
+    .silk-particle,
+    .silk-gradient {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
